@@ -1,0 +1,22 @@
+{
+  "name": "neutrinojs",
+  "version": "0.0.5",
+  "description": "small js framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adam-dorin/neutrinoJS.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adam-dorin/neutrinoJS/issues"
+  },
+  "homepage": "https://github.com/adam-dorin/neutrinoJS#readme",
+  "dependencies": {
+    "squirrelly": "7.9.0"
+  }
+}
