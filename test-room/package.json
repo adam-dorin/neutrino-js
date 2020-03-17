@@ -1,7 +1,7 @@
 {
   "name": "neutrino-test-room",
   "version": "0.0.0",
-  "description": "Front end for adventurerlog.com",
+  "description": "Test env for neutrinoJS",
   "main": "index.js",
   "scripts": {
     "webpack-dev-server": "webpack-dev-server --config webpack.config.js",
@@ -12,10 +12,10 @@
     "analize-prod": "webpack --config webpack-analysis.config.js -p --env.production --mode production",
     "analize": "webpack --profile --json > stats.json",
     "start-php": "php -S localhost:9000",
-    "gzip-e":"gzip -9 -c public/main.bundle.js public/runtime.bundle.js | wc -c | numfmt --to=iec-i --suffix=B --padding=10",
+    "gzip-e": "gzip -9 -c public/main.bundle.js public/runtime.bundle.js | wc -c | numfmt --to=iec-i --suffix=B --padding=10",
     "cat-e": "cat public//main.bundle.js public/runtime.bundle.js | wc -c | numfmt --to=iec-i --suffix=B --padding=10",
     "move-resources": "node ./resource-parser.js",
-    "compare":"npm run cat-e && npm run gzip-e"
+    "compare": "npm run cat-e && npm run gzip-e"
   },
   "author": "Dorin Adam",
   "license": "ISC",
