@@ -1,4 +1,4 @@
-class Observer {
+export class Observer {
     /**
 	 * @description Simple Observer class
 	 * @param {Boolean} cache 
