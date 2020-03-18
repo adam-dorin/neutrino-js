@@ -1,30 +1,25 @@
 import { Component } from "../../core/component";
 
-
-export class FirstComponent extends Component {
-    constructor(){
-        super('my-component')
-        this.render( this.data() );
-    }
-
-    data() {
-        return {
-            data: {
-                test: 42 ,
-                count: 100
-            },
-            create: function() {
-                console.log('create',this.data);
-                let iii = setInterval( ()=>{
-                    this.test += 42;
-                    if(!this.count){
-                        clearInterval(iii)
-                    } else {
-
-                        this.count--;
-                    }
-                },10);
-            }
+const data = () => ({
+    test: 42,
+    count:100
+})
+const onCreate = function() {
+    console.log(this);
+    let iii = setInterval( ()=>{
+        this.test += 42;
+        if(!this.count){
+            clearInterval(iii)
+        } else {
+            this.count--;
         }
+    },10);
+};
+
+export const FirstComponent = () => Component('my-component',{
+    data:{ ...data() },
+    methods: {},
+    hooks: {
+        onCreate: onCreate
     }
-}
+}); 
