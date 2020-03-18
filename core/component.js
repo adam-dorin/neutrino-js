@@ -1,40 +1,65 @@
 import * as Sqrl from 'squirrelly'; 
 // https://github.com/squirrellyjs/squirrelly/
 
-export class Component {
-    constructor(name){
-
-        this.name = name;
-        this.__template = {
-            raw: null,
-            parsed:null
-        }
-        this.__component = {};
-        this.__template.raw = document.querySelector(`#${name}`).innerHTML;
-    }
-    __dataProxy( data ) {
+/**
+ * 
+ * @param {string} selector 
+ * @param {string} html 
+ */
+const Render  = (selector, html) => {
+    document.querySelector(`[${selector}]`).innerHTML = html;
+};
+/**
+ * 
+ * @param {string} name 
+ * @param {Object} hooks 
+ * @param {Object} thisArg 
+ */
+const ExecuteHook = (name, hooks, thisArg ) => hooks[name] ? hooks[name].apply(thisArg, []) : null;
+/**
+ * 
+ * @param {string} template 
+ * @param {Object} data 
+ */
+const Parse = (template, data) => Sqrl.Render(template, data);
+/**
+ * 
+ * @param {Object} data 
+ * @param {function} set 
+ */
+const DataProxy = (data, set) => new Proxy(data, {
+    get: (target, key)=>{
+        return target[key];
+    },
+    set: (target, key, value) => {         
+        if (!target.hasOwnProperty(key)) { return false; }
+        target[key] = value;
+        set(target,key,value)   
+        return true;
+    },
+});
+/**
+ * 
+ * @param {string} name 
+ * @param {Object} state 
+ */
+export const Component = (name, state) => {
+    
+    let State = {
+        name: name,
+        ...state.data,
+        ...state.methods,
         
-        return new Proxy(data, {
-            get: (target, key)=>{
-                return target[key];
-            },
-            set: (target, key, value) => {         
-                if (!target.hasOwnProperty(key)) { return false; }
-                target[key] = value;
-                this.__parse();   
-                return true;
-            },
-        });
-    }
-    __parse() {
-        this.__template.parsed = Sqrl.Render(this.__template.raw, this.__component.data);
-        document.querySelector(`[${this.name}]`).innerHTML = this.__template.parsed; 
-    }
-    render( component ) {
-        
-        this.__component.data = this.__dataProxy(component.data);
-        this.__parse()
-        if(component.create) component.create.apply(this.__component.data,[]); 
-        
-    }
-}
+    };
+    let Hooks = state.hooks;
+    let raw_template = document.querySelector(`#${name}`).innerHTML; 
+    let proxy = DataProxy(State,()=>{
+        Render(State.name, Parse(raw_template, proxy) );
+    });
+    let parsed = Parse(raw_template, proxy);
+    
+    
+    ExecuteHook('onCreate',Hooks, proxy);
+    Render(State.name, parsed );
+    return proxy;
+};

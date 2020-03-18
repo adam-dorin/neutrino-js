@@ -14,7 +14,7 @@ export class Neutrino {
             configuration.services.forEach( service => new service() );
         }
         if( configuration.components &&  configuration.components.length) {
-            configuration.components.forEach( component => new component() );
+            configuration.components.forEach( component => component() );
         }
         //TODO: Implement router
     }
