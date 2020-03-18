@@ -29,9 +29,9 @@ III. Simple router
 IV. Starter Project
 
 V. Cli
-    * [ ]  Project creation
-    * [ ] Component creation
-    * [ ] Run a local server
-    * [ ] Bundle the project for production
+ * [ ]  Project creation
+ * [ ] Component creation
+ * [ ] Run a local server
+ * [ ] Bundle the project for production
     
     
