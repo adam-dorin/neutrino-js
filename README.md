@@ -16,17 +16,22 @@ Create a performant, effective, small, fast js "Framework" under 10KB.
 ### Specific goals
 
 I. Components
- * Multiple components in 1 app. [ x ]
- 2. Lifecycle hooks [ ]
- 3. Singletons vs new instances [ ]
- 4. Inputs [ ]
- 5. Communication between components [ ]
+ * [x] Multiple components in 1 app.
+ * [ ] Lifecycle hooks 
+ * [ ] Singletons vs new instances
+ * [ ] Inputs
+ * [ ] Communication between components
 
 II. Observable
+
 III. Simple router
+
 IV. Starter Project
+
 V. Cli
-    1. Project creation [ ]
-    2. Component creation [ ]
-    3. Run a local server [ ]
-    4. Bundle the project for production [ ]
+    * [ ]  Project creation
+    * [ ] Component creation
+    * [ ] Run a local server
+    * [ ] Bundle the project for production
+    
+    
