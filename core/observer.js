@@ -28,7 +28,7 @@ export class Observer {
 	subscribe(name/** String */, subscriber/**Function */) {
 		this.__observers.push({name: name, receive: subscriber});
 		if(this.temp) {
-			this.__observers[this.__observers.length-1].receive(this.temp);
+			this.__observers[ this.__observers.length - 1 ].receive(this.temp);
 		}
 	}
 	
@@ -38,7 +38,7 @@ export class Observer {
 	 */
 	unsubscribe(name/**String */) {
         this.__observers = 
-        this.__observers.filter(observer=>observer.name!==name);
+        this.__observers.filter(observer => observer.name !== name );
 	}
 	
 	/**

@@ -1,14 +1,14 @@
-import * as Sqrl from 'squirrelly'; 
-// https://github.com/squirrellyjs/squirrelly/
+
+import { Observer } from './observer';
+import { Template } from './template';
+
 
 /**
- * 
- * @param {string} selector 
- * @param {string} html 
+ * @description
  */
-const Render  = (selector, html) => {
-    document.querySelector(`[${selector}]`).innerHTML = html;
-};
+const HOOKS = {
+    ON_CREATE: 'onCreate'
+}
 /**
  * 
  * @param {string} name 
@@ -16,12 +16,7 @@ const Render  = (selector, html) => {
  * @param {Object} thisArg 
  */
 const ExecuteHook = (name, hooks, thisArg ) => hooks[name] ? hooks[name].apply(thisArg, []) : null;
-/**
- * 
- * @param {string} template 
- * @param {Object} data 
- */
-const Parse = (template, data) => Sqrl.Render(template, data);
+
 /**
  * 
  * @param {Object} data 
@@ -34,12 +29,14 @@ const DataProxy = (data, set) => new Proxy(data, {
     set: (target, key, value) => {         
         if (!target.hasOwnProperty(key)) { return false; }
         target[key] = value;
-        set(target,key,value)   
+        setTimeout(()=>{
+            set(target,key,value);   
+        });
         return true;
     },
 });
 /**
- * 
+ * TODO: Consider classes when using multiple instances of the same components
  * @param {string} name 
  * @param {Object} state 
  */
@@ -49,17 +46,28 @@ export const Component = (name, state) => {
         name: name,
         ...state.data,
         ...state.methods,
-        
     };
     let Hooks = state.hooks;
-    let raw_template = document.querySelector(`#${name}`).innerHTML; 
-    let proxy = DataProxy(State,()=>{
-        Render(State.name, Parse(raw_template, proxy) );
+
+    let raw_template = document.querySelector(`#${name}`).innerHTML;
+
+    let renderer = new Observer(false); 
+
+    let proxy = DataProxy( State, () => {
+        renderer.send(proxy);
     });
-    let parsed = Parse(raw_template, proxy);
+    // onData HOOK //TODO: define onData Hook
+    renderer.subscribe(State.name, ()=>{
+        // onBeforeChange HOOK
+        Template.render(State.name, proxy);
+        // onAfterChange HOOK
+    });
     
-    
-    ExecuteHook('onCreate',Hooks, proxy);
-    Render(State.name, parsed );
-    return proxy;
+    Template.render(State.name, proxy);
+    ExecuteHook(HOOKS.ON_CREATE, Hooks, proxy);
+    return { 
+        name: name, 
+        raw_template: raw_template,
+        renderer: renderer.send
+    };
 };
