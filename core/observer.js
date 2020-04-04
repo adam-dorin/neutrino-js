@@ -1,5 +1,5 @@
-export class Observer {
-    /**
+class BaseObserver {
+	/**
 	 * @description Simple Observer class
 	 * @param {Boolean} cache 
 	 * 
@@ -18,6 +18,17 @@ export class Observer {
 		 * @description Flag used to determine if caching should occur
 		 */
 		this.cache = cache;
+	}
+}
+
+export class SimpleObserver extends BaseObserver {
+    /**
+	 * @description Simple Observer class
+	 * @param {Boolean} cache 
+	 * 
+	 */	
+	constructor(cache = true) {
+		super(cache);
 	}
 	
 	/**
@@ -51,4 +62,51 @@ export class Observer {
 	}
 
 
+}
+
+export class DictionaryObserver extends BaseObserver {
+    /**
+	 * @description Simple Observer class
+	 * @param {Boolean} cache 
+	 * 
+	 */	
+	constructor(cache = true) {
+		super(cache);
+		this.__observers = {};
+	}
+	
+	/**
+     * @description Method to subscribe for changes
+     * @param {String} name 
+     * @param {Function} subscriber 
+     */
+	subscribe(name/** String */, subscriber/**Function */) {
+		this.__observers[name] = subscriber;
+		if(this.temp) {
+			this.__observers[ name ](this.temp);
+		}
+	}
+	
+	/**
+	 * @description Method to stop receiving changes
+	 * @param {String} name 
+	 */
+	unsubscribe(name/**String */) {
+		this.__observers[name] = undefined;
+	}
+	
+	/**
+	 * @description Method to send data to all subscribers
+	 * @param {Any} data 
+	 */
+	broadcast( data/**any */) {
+		
+		Object.keys(this.__observers).forEach(key => this.__observers[key](data));
+		this.temp = this.cache ? data : null;
+	}
+	
+	sendTo(name/**string */, data/**any */) {
+		this.__observers[name](data);
+		this.temp = this.cache ? data : null;
+	}
 }
