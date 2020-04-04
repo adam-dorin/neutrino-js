@@ -21,7 +21,7 @@ I. Components
  * [ ] Lifecycle hooks 
  * [ ] Singletons vs new instances
  * [ ] Inputs
- * [ ] Communication between components
+ * [x] Communication between components
 
 II. Observable
 
