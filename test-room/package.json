@@ -15,7 +15,7 @@
     "gzip-e": "gzip -9 -c public/main.bundle.js public/runtime.bundle.js | wc -c | numfmt --to=iec-i --suffix=B --padding=10",
     "cat-e": "cat public//main.bundle.js public/runtime.bundle.js | wc -c | numfmt --to=iec-i --suffix=B --padding=10",
     "move-resources": "node ./resource-parser.js",
-    "compare": "npm run cat-e && npm run gzip-e"
+    "compare": "npm run build-prod && npm run cat-e && npm run gzip-e"
   },
   "author": "Dorin Adam",
   "license": "ISC",
