@@ -14,6 +14,7 @@ const onCreate = function() {
             this.count--;
         }
     },10);
+    this.component.emitter.sendTo('nested-component',{test:'trolololo'})
 };
 
 export const FirstComponent = () => Component('my-component',{

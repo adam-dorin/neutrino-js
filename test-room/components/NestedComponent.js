@@ -11,11 +11,15 @@ const onCreate = function() {
 
     
 };
+const onData = function(data) {
+    console.log(this,data);
+}
 
 export const NestedComponent = () => Component('nested-component',{
     data:{ ...data() },
     methods: {},
     hooks: {
-        onCreate: onCreate
+        onCreate: onCreate,
+        onData: onData
     }
 }); 
