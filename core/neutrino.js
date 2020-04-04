@@ -20,7 +20,8 @@ export class Neutrino {
             .map( component =>{ 
                 const compiled = component();
                 Template.setTemplate( compiled.name, compiled.raw_template);
-            });
+                return compiled;
+            }).map(compiled=>compiled.ready());
         }
         //TODO: Implement router
     }
