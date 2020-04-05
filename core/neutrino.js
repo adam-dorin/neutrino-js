@@ -5,7 +5,19 @@ const addToTree = (the, tree) =>{
     the.items.splice(the.index,1); 
 };
 
-const orderByDependencyLevel = (compiled, tree, callback) =>{
+const orderByDependencyLevel = (compiled, tree, names, callback) =>{
+    
+    if(names.length) {
+        // determine children 
+        compiled.forEach(comp=>{
+            comp.children = names.filter(name=>comp.raw_template.includes(name))
+        })
+        // sort desc by number of children 
+        compiled.sort((current,next)=>
+            next.children.length-current.children.length
+        );
+    }
+    
     let components = [...compiled];
     
     components.forEach((component, index )=>{
@@ -20,7 +32,7 @@ const orderByDependencyLevel = (compiled, tree, callback) =>{
         }
     });
     if(components.length){
-        orderByDependencyLevel(components, tree, callback);
+        orderByDependencyLevel(components, tree, [], callback);
     } else {
         return callback();
     }   
@@ -40,20 +52,23 @@ export class Neutrino {
     }
 
     run(configuration) {
-        // console.log('run', configuration);
+   
         if( configuration.services && configuration.services.length) {
             configuration.services.forEach( service => new service() );
         }
         if( configuration.components &&  configuration.components.length) {
-            let compiledComponents = configuration.components
-            .map( component => component() );
             
-            compiledComponents.sort((current,next)=>
-                next.children.length-current.children.length
-            );
-           
-            orderByDependencyLevel(compiledComponents, this.tree, ()=>{
-                this.tree.components.map(compiled=>compiled.ready() );    
+            let componentNames = [];
+            let compiledComponents = configuration.components
+            .map( component => {
+                let compiled = component();
+                componentNames.push(compiled.name);
+
+                return compiled; 
+            });
+
+            orderByDependencyLevel(compiledComponents, this.tree, componentNames, () => {
+                this.tree.components.map(compiled=>compiled.ready() );
             });
         }
         //TODO: Implement router

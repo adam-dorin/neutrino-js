@@ -63,20 +63,19 @@ export const Component = (name, state) => {
 
     let proxy = DataProxy( State, renderer);
     
+    // onData HOOK
     DataReceiver.subscribe(State.name,(data)=>{
         ExecuteHook(HOOKS.ON_DATA, Hooks, proxy, data);
     });
-    // onData HOOK //TODO: define onData Hook
+     
     renderer.subscribe(State.name, ()=>{
-        // onBeforeChange HOOK
         Template.render(State.name, proxy);
-        // onAfterChange HOOK
     });
     
     
     return { 
         name: name,
-        children:[...state.children||[] ], 
+        children:[], 
         raw_template: raw_template,
         ready: ()=>{
 
