@@ -1,5 +1,5 @@
 {
-  "name": "neutrinojs",
+  "name": "neutrino-js",
   "version": "0.0.7",
   "description": "small js framework",
   "main": "index.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adam-dorin/neutrinoJS.git"
+    "url": "git+https://github.com/adam-dorin/neutrino-js.git"
   },
   "author": "Dorin Adam",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/adam-dorin/neutrinoJS/issues"
+    "url": "https://github.com/adam-dorin/neutrino-js/issues"
   },
-  "homepage": "https://github.com/adam-dorin/neutrinoJS#readme",
+  "homepage": "https://github.com/adam-dorin/neutrino-js#readme",
   "dependencies": {
     "squirrelly": "7.9.0"
   }
