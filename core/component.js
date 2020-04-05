@@ -73,12 +73,15 @@ export const Component = (name, state) => {
         // onAfterChange HOOK
     });
     
-    Template.render(State.name, proxy);
     
     return { 
-        name: name, 
+        name: name,
+        children:[...state.children||[] ], 
         raw_template: raw_template,
-        ready:()=>{
+        ready: ()=>{
+
+            Template.setTemplate( State.name, raw_template);
+            Template.render(State.name, proxy);
             ExecuteHook(HOOKS.ON_CREATE, Hooks, proxy);
         }
     };

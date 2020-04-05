@@ -5,27 +5,6 @@ import * as Sqrl from 'squirrelly';
 let Templates = {};
 let TemplateElements = {};
 
-/**
- * 
- * TODO: One thing that should be considered is concurency of operations, dependencies and components with children.   
- * TODO: In that case a Virtual dom should be implemented where all yhe components het redered first, 
- * TODO: then afterwards in order of dependency they get pushed to the DOM.
- * 
- */
-
- /**
-  * 
-  * C=>B
-  * A => uses D
-  * B => uses C
-  * D=>A
-  * 
-  * if component has dependecies => go to deps que 
-  *                          else setTree component
-  * for each dep in component.dependecies 
-  *     => find dep and setTree dep component
-  * 
-  */
 class TemplateElement {
     constructor(){
 
@@ -79,19 +58,3 @@ class _Template {
 
 export const Template = new _Template();
 
-export const getTemplate = (name) => Templates[ name ];
-
-export const setTemplate = (name, template) => {
-
-    Templates[ name ] = template;
-    
-    
-    if(!VD.querySelector(`${name}-template`)){
-        const template_el = document.createElement('div')
-        template_el.setAttribute('id',`${name}-template`)
-        template_el.innerHTML = template;
-        VD.appendChild(template_el);
-    }
-    console.log(VD,Templates);
-    
-}
