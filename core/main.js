@@ -38,7 +38,7 @@ const orderByDependencyLevel = (compiled, tree, names, callback) =>{
     }   
 }
 
-export class Neutrino {
+export class Span {
     /**
      * 
      * @param {Object} configuration : { components:Component[], services:?Service[], router: Router } 

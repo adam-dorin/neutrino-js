@@ -1,4 +1,4 @@
-export {Neutrino} from './neutrino';
+export {Span} from './main';
 export {Component} from './component';
 export {
     SimpleObserver,
