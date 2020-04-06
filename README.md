@@ -1,4 +1,4 @@
-# NeutrinoJS
+# SpanJS
 
 ### Main Goal
 
