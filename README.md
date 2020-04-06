@@ -21,6 +21,7 @@ I. Components
  * [ ] Lifecycle hooks 
  * [x] ~~Inputs~~ Decided to go with observer pattern
  * [x] Communication between components
+ * [ ] Multi instanced components
 
 II. Simple router
 
