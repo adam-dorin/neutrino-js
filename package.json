@@ -1,5 +1,5 @@
 {
-  "name": "neutrino-js",
+  "name": "spanjs",
   "version": "0.0.8",
   "description": "small js framework",
   "main": "index.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adam-dorin/neutrino-js.git"
+    "url": "git+https://github.com/spanjs/spanjs.git"
   },
   "author": "Dorin Adam",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/adam-dorin/neutrino-js/issues"
+    "url": "https://github.com/spanjs/spanjs/issues"
   },
-  "homepage": "https://github.com/adam-dorin/neutrino-js#readme",
+  "homepage": "https://github.com/spanjs/spanjs#readme",
   "dependencies": {
     "squirrelly": "7.9.0"
   }
