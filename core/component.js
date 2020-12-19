@@ -55,11 +55,16 @@ export const Component = (name, state) => {
             emitter: DataReceiver
         }
     };
+
+    let templateInstance = new Template();
+
     let Hooks = state.hooks;
 
     let raw_template = document.querySelector(`#${name}`).innerHTML;
 
     let renderer = new SimpleObserver(false); 
+    let eternalRenderer = new SimpleObserver(false); 
+
 
     let proxy = DataProxy( State, renderer);
     
@@ -69,18 +74,21 @@ export const Component = (name, state) => {
     });
      
     renderer.subscribe(State.name, ()=>{
-        Template.render(State.name, proxy);
+        templateInstance.render(State.name, proxy);
     });
-    
+    eternalRenderer.subscribe(State.name,()=>{
+        templateInstance.render(State.name, proxy);
+    })
     
     return { 
         name: name,
         children:[], 
         raw_template: raw_template,
+        renderer: eternalRenderer,
         ready: ()=>{
 
-            Template.setTemplate( State.name, raw_template);
-            Template.render(State.name, proxy);
+            templateInstance.setTemplate( State.name, raw_template);
+            templateInstance.render(State.name, proxy);
             ExecuteHook(HOOKS.ON_CREATE, Hooks, proxy);
         }
     };
