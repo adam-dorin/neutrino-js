@@ -4,16 +4,17 @@ import * as Sqrl from 'squirrelly';
 
 let Templates = {};
 let TemplateElements = {};
-
+let count = 0;
 class TemplateElement {
     constructor(){
 
     }
+
     getElement(selector) {
-        return TemplateElements[selector] ||document.querySelector(`[${selector}]`);
+        return document.querySelectorAll(`[comp-${selector}]`);
     }
     isCached(selector){
-        return TemplateElements[selector];
+        return TemplateElements[selector].length>0;
     }
     cacheElement(selector,element){
         TemplateElements[selector] = element;
@@ -21,11 +22,11 @@ class TemplateElement {
 
     setHTML(selector, html) {
 
-
-        if(!this.isCached(selector)){
-            this.cacheElement(selector, this.getElement(selector) );
+        if(this.getElement(selector).length){
+            this.getElement(selector).forEach(element => {
+               element.innerHTML = html;
+            });
         }
-        this.getElement(selector).innerHTML = html;
     
     }
 }
@@ -33,7 +34,7 @@ class TemplateElement {
 class _Template {
     
     constructor(){
-        this.element = new TemplateElement()
+        this.element = new TemplateElement();
     }
     getTemplate(name) {
         return !!Templates[ name ] ? Templates[ name ] : null; 
@@ -45,16 +46,21 @@ class _Template {
     }
 
     parse(name, data ){
+        console.log(this.getTemplate(name), data);
         return Sqrl.Render(this.getTemplate(name), data);
     }
     render(name, data) {
         setTimeout(()=>{
-            this.element.setHTML(name, this.parse(name,data) );
+        let x = this.parse(name,data);
+        // console.log(name,x)
+        this.element.setHTML(name, x );
+        // count++;
+        // console.log(`Current count is ${count}`);
         })
     }
 
 
 }
 
-export const Template = new _Template();
+export const Template = _Template;
 
