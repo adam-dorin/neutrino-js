@@ -10,7 +10,7 @@ const orderByDependencyLevel = (compiled, tree, names, callback) =>{
     if(names.length) {
         // determine children 
         compiled.forEach(comp=>{
-            comp.children = names.filter(name=>comp.raw_template.includes(name))
+            comp.children = names.filter(name=>comp.raw_template.includes(`comp-${name}`))
         })
         // sort desc by number of children 
         compiled.sort((current,next)=>
@@ -19,7 +19,6 @@ const orderByDependencyLevel = (compiled, tree, names, callback) =>{
     }
     
     let components = [...compiled];
-    
     components.forEach((component, index )=>{
         let the = { item: component, index: index, items:components}
         if(!component.children.length){
@@ -59,16 +58,25 @@ export class Span {
         if( configuration.components &&  configuration.components.length) {
             
             let componentNames = [];
+            let dictionayComponentList = {};
             let compiledComponents = configuration.components
             .map( component => {
                 let compiled = component();
                 componentNames.push(compiled.name);
+                dictionayComponentList[compiled.name] = compiled;
 
                 return compiled; 
             });
 
             orderByDependencyLevel(compiledComponents, this.tree, componentNames, () => {
-                this.tree.components.map(compiled=>compiled.ready() );
+                this.tree.components.map(compiled=>{
+                    compiled.ready() 
+                    if(compiled.children.length){
+                        compiled.children.map(comp=>{
+                            dictionayComponentList[comp].renderer.send(true);
+                        })
+                    } 
+                });
             });
         }
         //TODO: Implement router
