@@ -46,16 +46,12 @@ class _Template {
     }
 
     parse(name, data ){
-        console.log(this.getTemplate(name), data);
         return Sqrl.Render(this.getTemplate(name), data);
     }
     render(name, data) {
         setTimeout(()=>{
-        let x = this.parse(name,data);
-        // console.log(name,x)
-        this.element.setHTML(name, x );
-        // count++;
-        // console.log(`Current count is ${count}`);
+            let x = this.parse(name,data);
+            this.element.setHTML(name, x );
         })
     }
 
