@@ -1,3 +1,4 @@
+import { DictionaryObserver } from "./observer";
 
 const addToTree = (the, tree) =>{
     tree.names.unshift(the.item.name);
@@ -59,6 +60,7 @@ export class Span {
             
             let componentNames = [];
             let dictionayComponentList = {};
+            let dictionaryComponentListSubscriber = new DictionaryObserver(true);
             let compiledComponents = configuration.components
             .map( component => {
                 let compiled = component();
@@ -69,8 +71,9 @@ export class Span {
             });
 
             orderByDependencyLevel(compiledComponents, this.tree, componentNames, () => {
+                console.log(this.tree);
                 this.tree.components.map(compiled=>{
-                    compiled.ready() 
+                    compiled.ready(dictionaryComponentListSubscriber) 
                     if(compiled.children.length){
                         compiled.children.map(comp=>{
                             dictionayComponentList[comp].renderer.send(true);
