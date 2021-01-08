@@ -73,6 +73,7 @@ export class DictionaryObserver extends BaseObserver {
 	constructor(cache = true) {
 		super(cache);
 		this.__observers = {};
+		this.temp = {};
 	}
 	
 	/**
@@ -81,9 +82,10 @@ export class DictionaryObserver extends BaseObserver {
      * @param {Function} subscriber 
      */
 	subscribe(name/** String */, subscriber/**Function */) {
+		console.log(name)
 		this.__observers[name] = subscriber;
-		if(this.temp) {
-			this.__observers[ name ](this.temp);
+		if(this.temp[name]) {
+			this.__observers[ name ](this.temp[name]);
 		}
 	}
 	
@@ -101,12 +103,16 @@ export class DictionaryObserver extends BaseObserver {
 	 */
 	broadcast( data/**any */) {
 		
-		Object.keys(this.__observers).forEach(key => this.__observers[key](data));
-		this.temp = this.cache ? data : null;
+		Object.keys(this.__observers).forEach(key => {
+			this.__observers[key](data)
+			if(this.cache) {
+				this.temp[key] = data
+			}
+		});
 	}
 	
 	sendTo(name/**string */, data/**any */) {
-		this.__observers[name](data);
-		this.temp = this.cache ? data : null;
+		this.__observers[name] ? this.__observers[name](data): null;		
+		this.temp[name] = this.cache ? data : null;
 	}
 }
