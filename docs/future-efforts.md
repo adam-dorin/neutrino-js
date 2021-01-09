@@ -5,7 +5,7 @@ This doc is a way to keep track of ideas, beyond the initial scope of the projec
 
 ## CSS/SCSS Integration
 
-Add a way of scaffording some base css for applications that is in line with the overarching goals ( small and performant)
+Add a way of scaffolding some base CSS for applications that is in line with the overarching goals ( small and performant)
 
 * [Big list of projects](https://css-tricks.com/snippets/css/system-font-stack/)
 * [mourner/dead-simple-grid](https://github.com/mourner/dead-simple-grid)
@@ -32,6 +32,6 @@ Create a suite of types of components that use the framework
 
 The components have to be:
 * Modular( they can installed individually)
-* Small Additions with as litle code as possible
-* **NO** external dependecies
+* Small Additions with as little code as possible
+* **NO** external dependencies
 

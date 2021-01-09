@@ -18,7 +18,7 @@ Create a performant, effective, small, fast js "Framework" under 10KB.
 I. Components
  * [x] Multiple components in 1 app.
  * [x] Nesting component dependencies
- * [ ] Lifecycle hooks 
+ * [x] Lifecycle hooks 
  * [x] ~~Inputs~~ Decided to go with observer pattern
  * [x] Communication between components
  * [ ] Multi instanced components
